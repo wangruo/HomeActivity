@@ -20,7 +20,7 @@
         <AutoCompleteTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="/storage/sdcard1/DCIM/Camera/VID_20150612_151400.mp4"
+            android:text=""
             android:id="@+id/autoCompleteTextView"
             android:layout_gravity="left|top" />
 

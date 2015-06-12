@@ -14,6 +14,9 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.io.File;
+import java.io.FileDescriptor;
+import java.io.FileInputStream;
 import java.io.IOException;
 
 /**
@@ -97,7 +100,7 @@ public class HomeActivity extends Activity implements SurfaceHolder.Callback {
 
         };
 		/* 创建数组适配器 */
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_dropdown_item_1line, urls);
 		/* 将适配器设置给 AutoCompleteTextView 组件对象 */
         url.setAdapter(adapter);
@@ -141,7 +144,7 @@ public class HomeActivity extends Activity implements SurfaceHolder.Callback {
 
     }/**
      * 设置点击事件
-     * @param view
+     * @param view 点击事件的按钮
      */
     public void onClick(View view) {
         int id = view.getId();
@@ -150,7 +153,7 @@ public class HomeActivity extends Activity implements SurfaceHolder.Callback {
             case R.id.play:
 			/* 播放视频直接从 AutoCompleteTextView 中获取字符串, 播放该 url 代表的网络视频 */
 //                playVideo(url.getText().toString());
-                playVideo("/storage/sdcard1/VID_20150612_151400.mp4");
+                playVideo("/storage/sdcard1/a.mp4");
                 break;
 
             case R.id.pause:
@@ -255,8 +258,8 @@ public class HomeActivity extends Activity implements SurfaceHolder.Callback {
                     try {
 
                         System.out.println("设置数据源");
-
-                        mediaPlayer.setDataSource(dataSource);
+                        FileDescriptor fd = new FileInputStream(new File(dataSource)).getFD();
+                        mediaPlayer.setDataSource(fd);
                         mediaPlayer.prepare();
 
 						/* 打印播放视频的时长 */
@@ -264,12 +267,12 @@ public class HomeActivity extends Activity implements SurfaceHolder.Callback {
 
                         mediaPlayer.start();
 
-                    } catch (IllegalStateException e) {
-                        e.printStackTrace();
+//                    } catch (IllegalStateException e) {
+//                        e.printStackTrace();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                };
+                }
             }.start();
 
 			/* 设置 MediaPlayer 开始播放标识为 true */
