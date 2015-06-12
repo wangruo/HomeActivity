@@ -18,36 +18,35 @@ import java.io.File;
 import java.io.FileDescriptor;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
- *
- *
  * SurfaceHolder
- * 		1. 简介 : 是 Surface 的控制器, 用于控制 SurfaceView 绘图, 处理画布上的动画, 渲染效果, 大小等;
- * 		2. 常用方法 :
- * 			-- abstract void addCallback(SurfaceHolder.Callback callback) : 添加一个 SurfaceHolder.Callback 接口对象, 监听 Surface 的开始结束绘制大小改变事件;
- * 			-- abstract Canvas lockCanvas() : 锁定画布, 可以获得 Canvas 对象, 之后就可以在 Canvas 上绘图了;
- *
+ * 1. 简介 : 是 Surface 的控制器, 用于控制 SurfaceView 绘图, 处理画布上的动画, 渲染效果, 大小等;
+ * 2. 常用方法 :
+ * -- abstract void addCallback(SurfaceHolder.Callback callback) : 添加一个 SurfaceHolder.Callback 接口对象, 监听 Surface 的开始结束绘制大小改变事件;
+ * -- abstract Canvas lockCanvas() : 锁定画布, 可以获得 Canvas 对象, 之后就可以在 Canvas 上绘图了;
+ * <p/>
  * SurfaceHolder.Callback接口 :
- * 		1. Surface 绘图边界 : 所有的绘图工作都在 Surface 创建之后才能进行, 在 Surface 销毁之前结束;
- * 		2. Callback 接口对应的 Surface 边界 : surfaceCreated() 方法在开始绘制时回调, surfaceDestroyed() 在 Surface 销毁前回调;
- * 		3. 该接口中的方法 :
- * 			-- surfaceChanged() : 在 Surface 大小改变时回调;
- * 			-- surfaceCreated() : 在 Surface 创建时回调;
- * 			-- surfaceDestroyed() : 在 Surface 销毁时回调;
+ * 1. Surface 绘图边界 : 所有的绘图工作都在 Surface 创建之后才能进行, 在 Surface 销毁之前结束;
+ * 2. Callback 接口对应的 Surface 边界 : surfaceCreated() 方法在开始绘制时回调, surfaceDestroyed() 在 Surface 销毁前回调;
+ * 3. 该接口中的方法 :
+ * -- surfaceChanged() : 在 Surface 大小改变时回调;
+ * -- surfaceCreated() : 在 Surface 创建时回调;
+ * -- surfaceDestroyed() : 在 Surface 销毁时回调;
  *
  * @author octopus
- *
  */
 public class HomeActivity extends Activity implements SurfaceHolder.Callback {
 
-    private AutoCompleteTextView url;							/* 地址输入框, 带自动提示功能 */
+    //    private AutoCompleteTextView url;							/* 地址输入框, 带自动提示功能 */
     private SurfaceView surface_view;							/* 播放视频载体 */
-    private TextView status;									/* 显示播放状态 */
-    private Button play;										/* 播放按钮 */
-    private Button pause;										/* 咱提供按钮 */
-    private Button reset;										/* 重放按钮 */
-    private Button stop;										/* 停止按钮 */
+//    private TextView status;									/* 显示播放状态 */
+//    private Button play;										/* 播放按钮 */
+//    private Button pause;										/* 咱提供按钮 */
+//    private Button reset;										/* 重放按钮 */
+//    private Button stop;										/* 停止按钮 */
 
     private MediaPlayer mediaPlayer;							/* 播放器 */
     private SurfaceHolder surface_holder; 						/* Surface 控制器 */
@@ -75,21 +74,22 @@ public class HomeActivity extends Activity implements SurfaceHolder.Callback {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        initViews();
+//        initViews();
         initData();
     }
+
     /**
      * 初始化成员变量中的组件变量
      */
     private void initViews() {
-		/* 通过 findViewById 获取相关方法 */
-        url = (AutoCompleteTextView) findViewById(R.id.autoCompleteTextView);
-        surface_view = (SurfaceView) findViewById(R.id.surfaceView);
-        status = (TextView) findViewById(R.id.status);
-        play = (Button) findViewById(R.id.play);
-        pause = (Button) findViewById(R.id.pause);
-        reset = (Button) findViewById(R.id.reset);
-        stop = (Button) findViewById(R.id.stop);
+        /* 通过 findViewById 获取相关方法 */
+//        url = (AutoCompleteTextView) findViewById(R.id.autoCompleteTextView);
+//        surface_view = (SurfaceView) findViewById(R.id.surfaceView);
+//        status = (TextView) findViewById(R.id.status);
+//        play = (Button) findViewById(R.id.play);
+//        pause = (Button) findViewById(R.id.pause);
+//        reset = (Button) findViewById(R.id.reset);
+//        stop = (Button) findViewById(R.id.stop);
 
 		/* 设置一个列表适配器 */
         String[] urls = {
@@ -99,15 +99,16 @@ public class HomeActivity extends Activity implements SurfaceHolder.Callback {
                 "http://k.youku.com/player/getFlvPath/sid/9409280845322127f6c57_00/st/flv/fileid/030002040053FFB59E433100422C39BAFA46CC-4DED-E928-87B8-91706CDB5FF2?K=645d8478a3aa59052411eb8a&ctype=12&ev=1&oip=1931322792&token=5696&ep=eyaUE0uFVsYE4CDdij8bYHrkJ3IIXP4J9h%2BFg9JmALshS57J6zvYspmzTf5CFv0bcFEFGZmA3aHjbDNnYfQ33BwQqkeqMfro%2BYLr5aRSw5AGFW1Ed7uhtlSbRTn3"
 
         };
-		/* 创建数组适配器 */
+        /* 创建数组适配器 */
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_dropdown_item_1line, urls);
-		/* 将适配器设置给 AutoCompleteTextView 组件对象 */
-        url.setAdapter(adapter);
+        /* 将适配器设置给 AutoCompleteTextView 组件对象 */
+//        url.setAdapter(adapter);
 
 		/* 使窗口支持透明度, 把当前 Activity 窗口设置成透明, 设置了该选项就可以使用 setAlpha 等函数设置窗口透明度 */
         getWindow().setFormat(PixelFormat.TRANSPARENT);
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -142,52 +143,64 @@ public class HomeActivity extends Activity implements SurfaceHolder.Callback {
         surface_holder.setFixedSize(160, 128);							/* 设置视频大小比例 */
 //        surface_holder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);/* 设置视频类型 */
 
-    }/**
+        new Timer().schedule(
+                new TimerTask() {
+                    @Override
+                    public void run() {
+                        playVideo("/storage/sdcard1/a.mp4");
+                    }
+                },
+                1000
+        );
+    }
+
+    /**
      * 设置点击事件
+     *
      * @param view 点击事件的按钮
      */
     public void onClick(View view) {
-        int id = view.getId();
-
-        switch (id) {
-            case R.id.play:
-			/* 播放视频直接从 AutoCompleteTextView 中获取字符串, 播放该 url 代表的网络视频 */
-//                playVideo(url.getText().toString());
-                playVideo("/storage/sdcard1/a.mp4");
-                break;
-
-            case R.id.pause:
-                if(mediaPlayer != null){
-                    mediaPlayer.pause();
-                    status.setText("暂停");
-                }
-                break;
-
-            case R.id.reset:
-                if(mediaPlayer != null){
-                    mediaPlayer.seekTo(0);
-                    mediaPlayer.start();
-                    status.setText("播放中");
-                }
-                break;
-
-            case R.id.stop:
-                if(mediaPlayer != null){
-                    mediaPlayer.stop();
-                    mediaPlayer.release();
-                    isStartPlaying = false;
-                    status.setText("停止");
-                }
-                break;
-
-            default:
-                break;
-        }
+//        int id = view.getId();
+//
+//        switch (id) {
+//            case R.id.play:
+//			/* 播放视频直接从 AutoCompleteTextView 中获取字符串, 播放该 url 代表的网络视频 */
+////                playVideo(url.getText().toString());
+//                playVideo("/storage/sdcard1/a.mp4");
+//                break;
+//
+//            case R.id.pause:
+//                if(mediaPlayer != null){
+//                    mediaPlayer.pause();
+//                    status.setText("暂停");
+//                }
+//                break;
+//
+//            case R.id.reset:
+//                if(mediaPlayer != null){
+//                    mediaPlayer.seekTo(0);
+//                    mediaPlayer.start();
+//                    status.setText("播放中");
+//                }
+//                break;
+//
+//            case R.id.stop:
+//                if(mediaPlayer != null){
+//                    mediaPlayer.stop();
+//                    mediaPlayer.release();
+//                    isStartPlaying = false;
+//                    status.setText("停止");
+//                }
+//                break;
+//
+//            default:
+//                break;
+//        }
     }
 
     @Override
     protected void onDestroy() {
-        if(mediaPlayer != null)
+        if (mediaPlayer != null)
             mediaPlayer.release();
         super.onDestroy();
     }
@@ -209,9 +222,9 @@ public class HomeActivity extends Activity implements SurfaceHolder.Callback {
 		 * b. 第二次点击 : 只需要 调用 mediaPlayer 的 start() 方法
 		 * 两种情况通过 isStartPlaying 点击时间判断 */
 
-        if(isStartPlaying){								/* 如果已经开始了播放, 就直接开始播放 */
+        if (isStartPlaying) {								/* 如果已经开始了播放, 就直接开始播放 */
             mediaPlayer.start();
-        }else{											/* 如果是第一次开始播放, 需要初始化 MediaPlayer 设置监听器等操作 */
+        } else {											/* 如果是第一次开始播放, 需要初始化 MediaPlayer 设置监听器等操作 */
             mediaPlayer = new MediaPlayer(); 			/* 创建 MediaPlayer 对象 */
             mediaPlayer.setAudioStreamType(2); 			/* 设置播放音量 */
             mediaPlayer.setDisplay(surface_holder); 	/* 设置播放载体 */
@@ -239,7 +252,7 @@ public class HomeActivity extends Activity implements SurfaceHolder.Callback {
                 @Override
                 public void onCompletion(MediaPlayer arg0) {
                     System.out.println("播放完毕了");
-                    status.setText("播放完毕");
+//                    status.setText("播放完毕");
                 }
             });
 
@@ -249,11 +262,11 @@ public class HomeActivity extends Activity implements SurfaceHolder.Callback {
                 public void onPrepared(MediaPlayer arg0) {
                     System.out.println("准备完毕");
 					/* 设置播放状态 */
-                    status.setText("播放中");
+//                    status.setText("播放中");
                 }
             });
 
-            new Thread(){
+            new Thread() {
                 public void run() {
                     try {
 
@@ -278,9 +291,7 @@ public class HomeActivity extends Activity implements SurfaceHolder.Callback {
 			/* 设置 MediaPlayer 开始播放标识为 true */
             isStartPlaying = true;
 			/* 设置播放状态 */
-            status.setText("正在缓冲");
+//            status.setText("正在缓冲");
         }
-
-
     }
 }
